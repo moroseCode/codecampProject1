@@ -25,7 +25,15 @@ if (navigator.geolocation) {
         .then(function(gnResults) {
             console.log(gnResults);
             var zip = gnResults.postalCodes[0].postalCode;
-            $('#inputZip').val(zip);
+            // $('#inputZip').val(zip);
         });
     });
 }
+
+var placesAutocomplete = places({
+    appId: 'plFMDJBLKKRN',
+    apiKey: '1cb69f9d821db1d22c2375decf532784',
+    container: document.querySelector('#address-input')
+  });
+
+  console.log(placesAutocomplete);
