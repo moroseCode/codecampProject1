@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <title>Albatros Golf Planner</title>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    </head>
+
+    <body>
+        <div class="jumbotron">
+            <h1 class="display-4">Heading</h1>
+        
+            <form class="results">
+                <div class="form-group">
+                    <label for="inputZip">Zipcode</label>
+                    <input type="number" class="form-control" id="inputZip">
+                </div>
+                <div class="form-group">
+                    <label for="inputStartDate">Start Date</label>
+                    <input type="date" class="form-control" id="inputStartDate">
+                </div>
+                <div class="form-group">
+                    <label for="inputEndDate">End Date</label>
+                    <input type="date" class="form-control" id="inputEndDate">
+                </div>
+                <a href="results.html" class="btn btn-primary active" role="button">Search</a>
+            </form>
+        
+        </div>
+        <div class="container">
+
+            <div class="row">
+
+                <!--Times for selected golf course-->
+                <div class="col-md-8 resultTable">
+
+                    <table id="searchResults">
+
+                        <tr>
+                            <th>Golf Course</th>
+                            <th>Address</th>
+                            <th>Available Tee Times</th>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="col-md-4 weather">
+
+                    <!--Weather for selected time and place-->
+                    <div class="card" id="weatherInfo"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+    </body>
+
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+    <!--app logic-->
+    <script src="assets/javascript/app.js"></script>
+
+</html>
