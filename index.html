@@ -17,8 +17,11 @@
 
             <form class="index">
                 <div class="form-group">
-                    <label for="address-input">Location</label>
-                    <input type="search" class="form-control" id="address-input">
+                    <label for="city-input">Location</label>
+                    <input id="city-input" list="location" name="myLocation" />
+                    <datalist id="location">
+                        <option value="Use my current location">
+                    </datalist>
                 </div>
                 <div class="form-group">
                     <label for="inputStartDate">Start Date</label>
@@ -28,7 +31,7 @@
                     <label for="inputEndDate">End Date</label>
                     <input type="date" class="form-control" id="inputEndDate">
                 </div>
-                <a href="results.html" class="btn btn-primary active" role="button">Search</a>
+                <a href="results.html" id="submit" class="btn btn-primary active" role="button">Search</a>
             </form>
 
         </div>
