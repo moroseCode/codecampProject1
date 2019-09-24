@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+//         var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "http://api.amp.active.com/v2/search?zip=23219&api_key=yfb8tzs47k5z8j9463emhphv&radius=100&=",
+//   "method": "GET"
+//   }
+jQuery.ajaxPrefilter(function(options) {
+   if (options.crossDomain && jQuery.support.cors) {
+       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+   }
+});
+        // $.ajax(settings).done(function (response) {
+        //     console.log(response.results);
+        // });
+        var startDate = "2019-09-24.."
+
+        var params = {
+            "api_key": "yfb8tzs47k5z8j9463emhphv",
+            "query":    "golf",
+            "near": "richmond,va,us",
+            "radius": "25",
+            "start_date": startDate
+        }
+        
+        var queryURL = "http://api.amp.active.com/v2/search";
+        
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            data: params
+          }).then(function(response) {
+            var results = response.results;
+            var testResult = results[0]
+            var recurrences = testResult.activityRecurrences[0]
+            console.log(results)
+            console.log(testResult.assetComponents["0"].assetName)
+            console.log(testResult.assetDescriptions["0"].description)
+            console.log(testResult.registrationUrlAdr)
+            console.log(recurrences.activityStartDate)
+            console.log(recurrences.activityEndDate)
+            console.log(recurrences.activityStartDate)
+            console.log(recurrences.activityEndDate)
+            console.log(recurrences.frequency.frequencyName)
+            console.log(testResult.place.addressLine1Txt)
+            console.log(testResult.place.cityName + ", " + testResult.place.stateProvinceCode)
+            console.log(testResult.place.postalCode)
+
+            // for (var i = 0; i < results.length; i++) {
+            //     var gifDiv = $("<div>");
+            //     $(gifDiv).addClass("gifDiv")
+            //     console.log(results[i])
+  
+            //     var rating = results[i].rating;
+            //     var p = $("<div>").text("Rating: " + rating);
+  
+            //     var personImage = $("<img>");
+  
+            //     personImage.attr("data-still", results[i].images.fixed_height_still.url);
+            //     personImage.attr("data-moving", results[i].images.fixed_height.url);
+            //     personImage.attr("src", results[i].images.fixed_height_still.url);
+            //     personImage.attr("data-state", "still");
+            //     personImage.addClass("gif");
+  
+            //     gifDiv.append(p);
+            //     gifDiv.append(personImage);
+  
+            //     $("#gifBucket").prepend(gifDiv);
+            // };
+        });
+            
+    </script>
+</body>
+</html>
