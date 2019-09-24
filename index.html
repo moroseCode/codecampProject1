@@ -17,7 +17,7 @@
 
         <!--background image div using parallax.js-->
         <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
-        
+
         <div class="jumbotron">
             <h1 class="display-4">Heading</h1>
 
@@ -35,6 +35,22 @@
             </div>
 
             <form class="index">
+               <!--Activity type selector-->
+               <div class="dropdown form-group">
+
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Activity</button>
+        
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        
+                        <button class="dropdown-item" type="button">golf</button>
+        
+                    </div>
+        
+                    <input type="text" id="dropdown-input"/>
+        
+                </div>
+
+                <!--location and time parameters-->
                 <div class="form-group">
                     <label for="city-input">Location</label>
                     <input id="city-input" list="location" name="myLocation" />
@@ -44,11 +60,11 @@
                 </div>
                 <div class="form-group">
                     <label for="inputStartDate">Start Date</label>
-                    <input type="date" class="form-control" id="inputStartDate">
+                    <input type="date" class="form-control" id="inputStartDate"/>
                 </div>
                 <div class="form-group">
                     <label for="inputEndDate">End Date</label>
-                    <input type="date" class="form-control" id="inputEndDate">
+                    <input type="date" class="form-control" id="inputEndDate"/>
                 </div>
                 <a href="results.html" id="submit" class="btn btn-primary active" role="button">Search</a>
             </form>
@@ -59,6 +75,10 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!--parallax.js-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="/path/to/parallax.js"></script>
         
         <!--app logic-->
         <script src="assets/javascript/app.js"></script>
