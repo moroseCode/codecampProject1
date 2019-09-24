@@ -9,11 +9,30 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Algolia Places -->
         <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+        <!--local css-->
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
 
     <body>
+
+        <!--background image div using parallax.js-->
+        <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
+        
         <div class="jumbotron">
             <h1 class="display-4">Heading</h1>
+
+            <!--activity select-->
+            <div class="dropdown">
+    
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Activity</button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                    <button class="dropdown-item" type="button">golf</button>
+
+                </div>
+
+            </div>
 
             <form class="index">
                 <div class="form-group">
@@ -35,12 +54,15 @@
             </form>
 
         </div>
-    </body>
 
-    <!--jQuery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!--Bootstrap js-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
-    <!--app logic-->
-    <script src="assets/javascript/app.js"></script>
+        <!--app logic-->
+        <script src="assets/javascript/app.js"></script>
+
+    </body>
 
 </html>
