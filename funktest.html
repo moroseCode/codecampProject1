@@ -78,6 +78,17 @@ jQuery.ajaxPrefilter(function(options) {
             //     $("#gifBucket").prepend(gifDiv);
             // };
         });
+
+        var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://api.openweathermap.org/data/2.5/forecast?APPID=7572b970a4911b30e78d7343f379b416&lat=37.535276&lon=-77.438224&cnt=16",
+  "method": "GET",
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
             
     </script>
 </body>
