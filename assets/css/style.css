@@ -1,0 +1,28 @@
+.parallax-window {
+    min-height: 200px;
+    background: transparent;
+}
+
+.jumbotron {
+    width: 500px;
+    margin: 10%;
+    background-image: linear-gradient(skyblue, white);
+}
+
+.parallax-slider {
+    width: 100%;
+    height: 100%;
+}
+
+#dropdown-input {
+    height: 37px;
+}
+
+#city-input {
+    
+
+}
+
+.display-4{
+    font-family:
+}

@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+    <head>
 
-    <meta charset="UTF-8">
-    <title>Albatros Golf Planner</title>
-    <!--Bootstrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Algolia Places -->
-    <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
-    <!--local css-->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://kit.fontawesome.com/eeaaa00cac.js"></script>
-</head>
+        <meta charset="UTF-8">
+        <title>Albatros Golf Planner</title>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Algolia Places -->
+        <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+        <!--local css-->
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" id="brand" href="#">Albatross</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,63 +29,108 @@
             </div>
         </div>
     </nav>
-    <!--background image div using parallax.js-->
-    <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
+        <!--background image div using parallax.js-->
+        <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
 
-    <div class="jumbotron">
-        <h1 class="display-4">Albatross</h1>
+        <div class="jumbotron">
+            <h1 class="display-4">Heading</h1>
+            <hr>
 
-        <!--activity select-->
+            <form class="index">
+                <div class="container">
 
-    </div>
-    <div class="container">
-    <div class="dropdown">
+                    <!--Activity type selector-->
+                    <div class="row dropdown form-group">
 
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Choose Activity</button>
+                        <div>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Activity</button>
+        
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        
+                                <button class="dropdown-item" type="button">golf</button>
+        
+                            </div>
 
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
 
-            <button class="dropdown-item" type="button">golf</button>
+                        <div>
+                            <input type="text" id="dropdown-input"/>
+                        </div>
+
+                    </div>
+                    
+                    
+                    <!--location and time parameters-->
+                    <div class="row form-group">
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Location</span>
+                            </div>
+                            <input id="city-input" list="location" name="myLocation" />
+                            <datalist id="location">
+                            <option value="Use my current location">
+                            </datalist>
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="row form-group">
+
+                        <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">End Date</span>
+                                    </div>
+                                    <input type="date" class="form-control" id="inputEndDate"/>
+                                </div>
+                        </div>
+
+                    
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">End Date</span>
+                                </div>
+                                <input type="date" class="form-control" id="inputEndDate"/>
+                            </div>
+
+                        </div>
+                    
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-md-10">
+
+                            <a href="results.html" id="submit" class="btn btn-primary active" role="button">Search</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
 
         </div>
 
-    </div>
-    
-        <form class="index">
-            <div class="form-group">
-                <label for="city-input">Location</label>
-                <input id="city-input" list="location" name="myLocation" />
-                <datalist id="location">
-                    <option value="Use my current location">
-                </datalist>
-            </div>
-            <div class="form-group">
-                <label for="inputStartDate">Start Date</label>
-                <input type="date" class="form-control" id="inputStartDate">
-            </div>
-            <div class="form-group">
-                <label for="inputEndDate">End Date</label>
-                <input type="date" class="form-control" id="inputEndDate">
-            </div>
-            <a href="results.html" id="submit" class="btn btn-primary active" role="button">Search</a>
-        </form>
-    </div>
+        <!--Bootstrap js-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+        <!--parallax.js-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="assets/parallax/parallax.js-1.5.0/parallax.js-1.5.0/parallax.js"></script>
+        
+        <!--app logic-->
+        <script src="assets/javascript/app.js"></script>
 
-    <!--Bootstrap js-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
-    <!--app logic-->
-    <script src="assets/javascript/app.js"></script>
 
 </body>
 
