@@ -9,12 +9,7 @@
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-//         var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": "http://api.amp.active.com/v2/search?zip=23219&api_key=yfb8tzs47k5z8j9463emhphv&radius=100&=",
-//   "method": "GET"
-//   }
+    var cityID = "";
     jQuery.ajaxPrefilter(function(options) {
     if (options.crossDomain && jQuery.support.cors) {
         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
@@ -54,45 +49,45 @@
         console.log(testResult.place.cityName + ", " + testResult.place.stateProvinceCode)
         console.log(testResult.place.postalCode)
     });
-            // for (var i = 0; i < results.length; i++) {
-            //     var gifDiv = $("<div>");
-            //     $(gifDiv).addClass("gifDiv")
-            //     console.log(results[i])
-  
-            //     var rating = results[i].rating;
-            //     var p = $("<div>").text("Rating: " + rating);
-  
-            //     var personImage = $("<img>");
-  
-            //     personImage.attr("data-still", results[i].images.fixed_height_still.url);
-            //     personImage.attr("data-moving", results[i].images.fixed_height.url);
-            //     personImage.attr("src", results[i].images.fixed_height_still.url);
-            //     personImage.attr("data-state", "still");
-            //     personImage.addClass("gif");
-  
-            //     gifDiv.append(p);
-            //     gifDiv.append(personImage);
-  
-            //     $("#gifBucket").prepend(gifDiv);
-            // };
-    var cityID = 331252
-    var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
-    var weatherParams = {
-        "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
-        "details": "true"
-    }   
+        
+    var coordsUrl = "https://dataservice.accuweather.com/locations/v1/cities/search"
+    var locLat = "37.574433" //needs to be a variable from the info from the stuff Bishop is using
+    var locLon = "-77.539932" //same as above
+    var coordsParams = {
+        "apikey": "0AJTGemJpazvUYpRY1sAuD3oMlYV26EA",
+        "q": locLat + "," + locLon
+    }
+
+    $.ajax({
+        "url": coordsUrl,
+        "method": "GET",
+        "data": coordsParams
+    }).then(function (response) {
+        console.log(response[0].Key)
+        cityID = response[0].Key
+        var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
+        var weatherParams = {
+            "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
+            "details": "true"
+        }   
+        console.log(cityID)
+    });
 
     $.ajax({
         "url": weatherUrl,
         "method": "GET",
         "data": weatherParams
     }).then(function (response) {
-        var testWeather = response.DailyForecasts[0]
-        console.log(testWeather)
-        console.log("Rain Probability: " + testWeather.Day.RainProbability);
-        console.log("Low: " + testWeather.Temperature.Minimum.Value)
-        console.log("High: " + testWeather.Temperature.Maximum.Value)
-        console.log(testWeather.Day.LongPhrase)
+        console.log(response.DailyForecasts)
+        for(var i = 0; i < (response.DailyForecasts).length; i++){
+            var weathDay = response.DailyForecasts[i]
+            console.log("Rain Probability: " + weathDay.Day.RainProbability + "%");
+            console.log("Low: " + weathDay.Temperature.Minimum.Value)
+            console.log("High: " + weathDay.Temperature.Maximum.Value)
+            console.log(weathDay.Day.LongPhrase)
+            console.log(weathDay.Day.IconPhrase)
+            console.log("--------------------------")
+        }
     });
             
     </script>
