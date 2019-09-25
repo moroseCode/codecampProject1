@@ -15,47 +15,45 @@
 //   "url": "http://api.amp.active.com/v2/search?zip=23219&api_key=yfb8tzs47k5z8j9463emhphv&radius=100&=",
 //   "method": "GET"
 //   }
-jQuery.ajaxPrefilter(function(options) {
-   if (options.crossDomain && jQuery.support.cors) {
-       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-   }
-});
+    jQuery.ajaxPrefilter(function(options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+    });
         // $.ajax(settings).done(function (response) {
         //     console.log(response.results);
         // });
-        var startDate = "2019-09-24.."
+    var startDate = "2019-09-24.."
 
-        var params = {
-            "api_key": "yfb8tzs47k5z8j9463emhphv",
-            "query":    "golf",
-            "near": "richmond,va,us",
-            "radius": "25",
-            "start_date": startDate
-        }
-        
-        var queryURL = "http://api.amp.active.com/v2/search";
-        
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-            data: params
-          }).then(function(response) {
-            var results = response.results;
-            var testResult = results[0]
-            var recurrences = testResult.activityRecurrences[0]
-            console.log(results)
-            console.log(testResult.assetComponents["0"].assetName)
-            console.log(testResult.assetDescriptions["0"].description)
-            console.log(testResult.registrationUrlAdr)
-            console.log(recurrences.activityStartDate)
-            console.log(recurrences.activityEndDate)
-            console.log(recurrences.activityStartDate)
-            console.log(recurrences.activityEndDate)
-            console.log(recurrences.frequency.frequencyName)
-            console.log(testResult.place.addressLine1Txt)
-            console.log(testResult.place.cityName + ", " + testResult.place.stateProvinceCode)
-            console.log(testResult.place.postalCode)
-
+    var activeParams = {
+        "api_key": "yfb8tzs47k5z8j9463emhphv",
+        "query":    "golf",
+        "near": "richmond,va,us",
+        "radius": "25",
+        "start_date": startDate
+    }
+    
+    var queryURL = "http://api.amp.active.com/v2/search";
+    
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        data: activeParams
+        }).then(function(response) {
+        var results = response.results;
+        var testResult = results[0]
+        var recurrences = testResult.activityRecurrences[0]
+        console.log(results)
+        console.log(testResult.assetComponents["0"].assetName)
+        console.log(testResult.assetDescriptions["0"].description)
+        console.log(testResult.registrationUrlAdr)
+        console.log(recurrences.activityStartDate)
+        console.log(recurrences.activityEndDate)
+        console.log(recurrences.frequency.frequencyName)
+        console.log(testResult.place.addressLine1Txt)
+        console.log(testResult.place.cityName + ", " + testResult.place.stateProvinceCode)
+        console.log(testResult.place.postalCode)
+    });
             // for (var i = 0; i < results.length; i++) {
             //     var gifDiv = $("<div>");
             //     $(gifDiv).addClass("gifDiv")
@@ -77,18 +75,25 @@ jQuery.ajaxPrefilter(function(options) {
   
             //     $("#gifBucket").prepend(gifDiv);
             // };
-        });
+    var cityID = 331252
+    var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
+    var weatherParams = {
+        "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
+        "details": "true"
+    }   
 
-        var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://api.openweathermap.org/data/2.5/forecast?APPID=7572b970a4911b30e78d7343f379b416&lat=37.535276&lon=-77.438224&cnt=16",
-  "method": "GET",
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+    $.ajax({
+        "url": weatherUrl,
+        "method": "GET",
+        "data": weatherParams
+    }).then(function (response) {
+        var testWeather = response.DailyForecasts[0]
+        console.log(testWeather)
+        console.log("Rain Probability: " + testWeather.Day.RainProbability);
+        console.log("Low: " + testWeather.Temperature.Minimum.Value)
+        console.log("High: " + testWeather.Temperature.Maximum.Value)
+        console.log(testWeather.Day.LongPhrase)
+    });
             
     </script>
 </body>
