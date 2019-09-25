@@ -1,28 +1,55 @@
 .parallax-window {
-    min-height: 200px;
+    min-height: 900px;
     background: transparent;
+}
+
+.navbar {
+    background-color:rgb(110, 150, 110)
 }
 
 .jumbotron {
     width: 500px;
     margin: 10%;
-    background-image: linear-gradient(skyblue, white);
+    background-image: linear-gradient(skyblue, rgb(69, 114, 91));
+}
+.position-css {
+    position: relative;
+    bottom: 900px;
+
+}
+
+#contact-us {
+    width: 500px;
+    margin: 10%;
+    background-image: linear-gradient(skyblue,white);
 }
 
 .parallax-slider {
     width: 100%;
     height: 100%;
+    
 }
 
 #dropdown-input {
     height: 37px;
 }
 
-#city-input {
-    
-
-}
-
 .display-4{
     font-family:
 }
+
+#basic-addon1 {
+    background-color:rgb(59, 78, 69);
+    color: white;
+}
+
+#submit{
+    background-color:rgb(59, 78, 69);
+    
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
