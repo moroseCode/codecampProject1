@@ -1,108 +1,83 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <title>Albatros Golf Planner</title>
-        <!--Bootstrap-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!--local css-->
-        <link rel="stylesheet" href="assets/css/style.css">
-    </head>
+    <meta charset="UTF-8">
+    <title>Albatros Golf Planner</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/eeaaa00cac.js"></script>
+</head>
 
-    <body>
-        <!--background image div using parallax.js-->
-        <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
-        
-        <div class="jumbotron searchAgain">
-            <h1 class="display-4">Heading</h1>
-            <div class="container">
-
-                <!--activity select-->
-                <div class="dropdown">
-
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Activity</button>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                        <button class="dropdown-item" type="button">golf</button>
-
-                    </div>
-
-                </div>
-        
-                <form class="results">
-            
-                    <!--search elements-->
-                    <div class="form-group">
-                        <label for="inputZip">Zipcode</label>
-                        <input type="number" class="form-control" id="inputZip">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputStartDate">Start Date</label>
-                        <input type="date" class="form-control" id="inputStartDate">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEndDate">End Date</label>
-                        <input type="date" class="form-control" id="inputEndDate">
-                    </div>
-
-                    <a href="results.html" class="btn btn-primary active" role="button">Search</a>
-
-                </form>
-
-            </div>    
-
-        </div>
-
-        <div class="container">
-
-            <div class="row">
-
-                <!--Times for selected golf course-->
-                <div class="col-md-8 resultTable">
-
-                    <table id="searchResults">
-
-                        <tr>
-                            <th>Golf Course</th>
-                            <th>Address</th>
-                            <th>Available Tee Times</th>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-                <div class="col-md-4 weather">
-
-                    <!--Weather for selected time and place-->
-                    <div class="card" id="weatherInfo"></div>
-
-                </div>
-
+<body>
+    <!-- Navbar begins -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" id="brand" href="#">Albatross</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Display items to the right -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">About</a>
+                <a class="nav-item nav-link" href="#"><i class="far fa-paper-plane"></i>&nbsp;Contact Us</a>
             </div>
-
         </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol id="searchTerms" class="breadcrumb">
+                    <li>date</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="h3 ">Results</span>
+            </div>
+        </div>
+        <!-- Where Cards will be pushed to provide results -->
 
-        <!--Bootstrap js-->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        
+        <div id="cardDiv" class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="assets/images/pexels-photo-1705667.jpeg" class="card-img" alt="ski">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Wintergreen Resort</h5>
+                                <p class="card-text"><small class="text-muted">Address</small></p>
+                                <p class="card-text">Start Date - End Date</p>
+                                <p class="card-text"><small class="text-muted">Description</small></p>
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-primary text-right">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-        <!--parallax.js-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="/path/to/parallax.js"></script>
 
-        <!--app logic-->
-        <script src="assets/javascript/app.js"></script>
-    
 
-    </body>
+</body>
+
+<!--jQuery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!--app logic-->
+<script src="assets/javascript/app.js"></script>
 
 </html>
