@@ -4,6 +4,12 @@
 var latitude;
 var longitude;
 var inputVal;
+var sDate;
+var eDate;
+var lname;
+var weatherResponse;
+var geoResponse;
+var activityResponse;
 
 // Listen for input in the Location field
 $(function() {
@@ -60,3 +66,24 @@ $(function() {
       console.log(cityInfo.suggestion);
     });
   })();
+
+  $("#submit").click(function(){
+    sDate = $("#startDate").val();
+    eDate = $("#endDate").val();
+   
+
+    //this is area where api call comes in
+    weatherResponse = //place response for weather api here;
+    geoResponse = //place response for geolocation api here;
+    activityResponse = //place response for activity api here;
+    //end of API call
+
+    //store to locale start to call on results page
+    window.localStorage.setItem('stDate', sDate);
+    window.localStorage.setItem('enDate', eDate);  
+    window.localStorage.setItem('weather', weatherResponse);
+    window.localStorage.setItem('location', geoResponse);
+    window.localStorage.setItem('activity', activityResponse);
+
+  })
+  
