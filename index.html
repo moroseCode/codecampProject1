@@ -27,15 +27,16 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="#">About</a>
-                <a class="nav-item nav-link" href="#"><i class="far fa-paper-plane"></i>&nbsp;Contact Us</a>
+                <a class="nav-item nav-link" href="contact.html"><i class="far fa-paper-plane"></i>&nbsp;Contact Us</a>
             </div>
         </div>
     </nav>
         <!--background image div using parallax.js-->
-        <div class="parallax-window" data-parallax="scroll" data-image-src="#"></div>
+        <div class="parallax-window" data-parallax="scroll" data-image-src="assets/images/canada-daylight-environment-415471.jpg"></div>
 
-        <div class="jumbotron">
-            <h1 class="display-4">Heading</h1>
+        <!--search input field-->
+        <div class="jumbotron position-css">
+            <h1 class="display-4">Search for activities</h1>
             <hr>
 
             <form class="index">
@@ -67,7 +68,7 @@
 
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Location</span>
+                                <span class="input-group-text" id="basic-addon1">Location</span>
                             </div>
                             <input id="city-input" list="location" name="myLocation" />
                             <datalist id="location">
@@ -84,9 +85,9 @@
                         <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">End Date</span>
+                                        <span class="input-group-text" id="basic-addon1">Start Date</span>
                                     </div>
-                                    <input type="date" class="form-control" id="inputEndDate"/>
+                                    <input type="date" class="form-control" id="inputstartDate"/>
                                 </div>
                         </div>
 
