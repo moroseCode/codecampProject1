@@ -85,3 +85,8 @@ button{
     clear: both;
     display: table;
   }
+
+#results {
+    position: relative;
+    bottom: 850px;
+}
