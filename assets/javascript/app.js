@@ -11,6 +11,52 @@ var weatherResponse;
 var geoResponse;
 var activityResponse;
 
+var weatherIcons = {
+    "sunny" : "http://uds-static.api.aero/weather/icon/sm/01.png",
+    "mostly sunny" : "http://uds-static.api.aero/weather/icon/sm/02.png",
+    "partly sunny" : "http://uds-static.api.aero/weather/icon/sm/03.png",
+    "intermittent clouds" : "http://uds-static.api.aero/weather/icon/sm/04.png",
+    "hazy sunshine" : "http://uds-static.api.aero/weather/icon/sm/05.png",
+    "mostly cloudy" : "http://uds-static.api.aero/weather/icon/sm/06.png",
+    "cloudy" : "http://uds-static.api.aero/weather/icon/sm/07.png",
+    "dreary" : "http://uds-static.api.aero/weather/icon/sm/08.png",
+    "fog" : "http://uds-static.api.aero/weather/icon/sm/11.png",
+    "showers" : "http://uds-static.api.aero/weather/icon/sm/12.png",
+    "mostly cloudy w/ showers" : "http://uds-static.api.aero/weather/icon/sm/13.png",
+    "partly sunny w/ showers" : "http://uds-static.api.aero/weather/icon/sm/14.png",
+    "t-storms" : "http://uds-static.api.aero/weather/icon/sm/15.png",
+    "mostly cloudy w/ t-storms" : "http://uds-static.api.aero/weather/icon/sm/16.png",
+    "partly sunny w/ t-storms" : "http://uds-static.api.aero/weather/icon/sm/17.png",
+    "rain" : "http://uds-static.api.aero/weather/icon/sm/18.png",
+    "flurries" : "http://uds-static.api.aero/weather/icon/sm/19.png",
+    "mostly cloudy w/ flurries" : "http://uds-static.api.aero/weather/icon/sm/20.png",
+    "partly sunny w/ flurries" : "http://uds-static.api.aero/weather/icon/sm/21.png",
+    "snow" : "http://uds-static.api.aero/weather/icon/sm/22.png",
+    "mostly cloudy w/ snow" : "http://uds-static.api.aero/weather/icon/sm/23.png",
+    "ice" : "http://uds-static.api.aero/weather/icon/sm/24.png",
+    "sleet" : "http://uds-static.api.aero/weather/icon/sm/25.png",
+    "freezing rain" : "http://uds-static.api.aero/weather/icon/sm/26.png",
+    "rain and snow" : "http://uds-static.api.aero/weather/icon/sm/29.png",
+    "hot" : "http://uds-static.api.aero/weather/icon/sm/30.png",
+    "cold" : "http://uds-static.api.aero/weather/icon/sm/31.png",
+    "windy" : "http://uds-static.api.aero/weather/icon/sm/32.png",
+    "clear" : "http://uds-static.api.aero/weather/icon/sm/33.png",
+    "mostly clear" : "http://uds-static.api.aero/weather/icon/sm/34.png",
+    "partly cloudy" : "http://uds-static.api.aero/weather/icon/sm/35.png",
+    "intermittent clouds" : "http://uds-static.api.aero/weather/icon/sm/36.png",
+    "hazy moonlight" : "http://uds-static.api.aero/weather/icon/sm/37.png",
+    "mostly cloudy" : "http://uds-static.api.aero/weather/icon/sm/38.png",
+    "partly cloudy w/ showers" : "http://uds-static.api.aero/weather/icon/sm/39.png",
+    "mostly cloudy w/ showers" : "http://uds-static.api.aero/weather/icon/sm/40.png",
+    "partly cloudy w/ t-storms" : "http://uds-static.api.aero/weather/icon/sm/41.png",
+    "mostly cloudy w/ flurries" : "http://uds-static.api.aero/weather/icon/sm/43.png",
+    "mostly cloudy w/ snow" : "http://uds-static.api.aero/weather/icon/sm/44.png"
+};
+
+var defaultImages = {
+    "golf" : "assets/images/defaultGolf.jpg"
+};
+
 // Listen for input in the Location field
 $(function() {
     $('#city-input').on('input',function() {
@@ -67,6 +113,7 @@ $(function() {
     });
   })();
 
+  // On click of the submit button
   $("#submit").click(function(){
     sDate = $("#startDate").val();
     eDate = $("#endDate").val();
@@ -100,32 +147,8 @@ $(function() {
          data: activeParams
          }).then(function(response) {
          var results = response.results;
-         // throwaway variable to cut down on typing.
-         // throwaway variable to cut down on typing
-        //  var recurrences = testResult.activityRecurrences[0]
          console.log(results);
-         // event title
-        //  console.log(testResult.assetComponents["0"].assetName)
-        //  description including html tags
-        //  console.log(testResult.assetDescriptions["0"].description)
-         // registration url
-        //  console.log(testResult.registrationUrlAdr)
-         // start date
-        //  console.log(recurrences.activityStartDate)
-         // end date
-        //  console.log(recurrences.activityEndDate)
-         // frequency of event
-        //  console.log(recurrences.frequency.frequencyName)
-         // street address of event
-        //  console.log(testResult.place.addressLine1Txt)
-         //city and state of event
-        //  console.log(testResult.place.cityName + ", " + testResult.place.stateProvinceCode)
-         // zip code of event
-        //  console.log(testResult.place.postalCode)
-         // organization hosting the event
-        //  console.log(testResult.organization.organizationName)
-         // organization phone number
-        //  console.log(testResult.organization.primaryContactPhone)
+        
         for(i = 0; i < results.length; i++){
             var eventName = results[i].assetName;
             var description = results[i].assetDescriptions["0"].description;
@@ -135,14 +158,42 @@ $(function() {
             var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
             var zipcode = results[i].place.postalCode;
             var eventsurl = results[i].registrationUrlAdr;
-            
-            console.log(eventName);
-            console.log(description);
-            console.log(eventStart);
-            console.log(streetAddress);
-            console.log(cityState);
-            console.log(zipcode);
-            console.log(eventsurl);
+            var topic = results[i].assetTopics["0"].topic.topicName.toLowerCase();
+
+            $('#results').removeClass("invisible");
+            $(document).scrollTop( $("#results").offset().top); 
+
+            if (eventsurl) {
+                newEventCard = `
+                <div class="card mb-3 eventCards">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="${defaultImages[topic]}" class="card-img">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 id= "place" class="card-title">${eventName}</h5>
+                            <p id = "location" class="card-text"><small class="text-muted">${streetAddress}, ${cityState}, ${zipcode}</small></p>
+                            <p id="dates" class="card-text">${eventStart} - ${eventEnd}</p>
+                            <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
+                        </div>
+                    </div>
+                    <div id="weather" class="col-md-2">Weather</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-right">
+                            <a href="${eventsurl}" class="btn btn-primary eventBtn">More Info</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                `;
+
+                $('#results').append(newEventCard);
+            } else {
+                // No link, most likely duplicate event, do not display
+            }
         }
     });
          
