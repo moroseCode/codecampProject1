@@ -1,10 +1,28 @@
+body {
+    background-color: rgb(206,228,239);
+}
+
+button{
+    background:transparent;
+    border: none;
+    color:white;
+}
+
+.h3 {
+    color: white;
+}
+
+.h3, #contact-us {
+    margin: 15px;
+}
+
 .parallax-window {
     min-height: 900px;
     background: transparent;
 }
 
 .navbar {
-    background-color:rgb(110, 150, 110)
+    background-color:rgb(110, 150, 110);
 }
 
 .jumbotron {
@@ -15,13 +33,25 @@
 .position-css {
     position: relative;
     bottom: 900px;
-
 }
 
 #contact-us {
     width: 500px;
-    margin: 10%;
+    padding:20px;
+    margin-top: 10px;
     background-image: linear-gradient(skyblue,white);
+    border-radius: 25px;
+}
+
+#contact-background {
+    display:block;
+    width:100%;
+    height:100%;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    bottom:400px;
+    z-index: -5;
 }
 
 .parallax-slider {
@@ -34,18 +64,20 @@
     height: 37px;
 }
 
-.display-4{
-    font-family:
-}
-
-#basic-addon1 {
+#basic-addon1, #submit, #send, #dropdownMenuButton, .btn-primary {
     background-color:rgb(59, 78, 69);
     color: white;
+    border: transparent;
 }
 
-#submit{
-    background-color:rgb(59, 78, 69);
-    
+#submit {
+    position:relative;
+    right: 15px;
+}
+
+#send {
+    position:relative;
+    left: 15px;
 }
 
 .clearfix::after {
