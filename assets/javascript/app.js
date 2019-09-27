@@ -54,6 +54,7 @@ var weatherIcons = {
 };
 
 var defaultImages = {
+    "default" : "assets/images/defaultOutdoors.jpg",
     "golf" : "assets/images/defaultGolf.jpg"
 };
 
@@ -136,7 +137,8 @@ $(function() {
          "query":    "golf", //temp value, would need to be from form on index. Requires OR if multiple search terms used
          "lat_lon": latitude + "," + longitude, //temp value
          "radius": "25", //temp value
-         "start_date": startDate + ".." + endDate
+         "start_date": startDate + ".." + endDate,
+         "exclude_children": "true"
      }
      
      var queryURL = "http://api.amp.active.com/v2/search";
@@ -154,46 +156,57 @@ $(function() {
             var description = results[i].assetDescriptions["0"].description;
             var eventStart = results[i].activityStartDate;
             var eventEnd = results[i].activityEndDate;
+            var eventDays = results[i].activityRecurrences["0"].days;
             var streetAddress = results[i].place.addressLine1Txt;
             var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
             var zipcode = results[i].place.postalCode;
             var eventsurl = results[i].registrationUrlAdr;
-            var topic = results[i].assetTopics["0"].topic.topicName.toLowerCase();
+            var topic = results[i].assetChannels["0"].channel.channelName.toLowerCase().replace(/[^a-z0-9\s]/gi, '');
+            console.log(eventName);
+            console.log(topic);
 
+            // Check if topic is in the defaultImages object
+            if (Object.keys(defaultImages).indexOf(topic) < 1 ) {
+                // If not, set image to default
+                topic = "default";
+            }
+
+            console.log(defaultImages[topic]);
+
+            // Unhide results div and jump down to that section
             $('#results').removeClass("invisible");
             $(document).scrollTop( $("#results").offset().top); 
 
-            if (eventsurl) {
-                newEventCard = `
-                <div class="card mb-3 eventCards">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="${defaultImages[topic]}" class="card-img">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 id= "place" class="card-title">${eventName}</h5>
-                            <p id = "location" class="card-text"><small class="text-muted">${streetAddress}, ${cityState}, ${zipcode}</small></p>
-                            <p id="dates" class="card-text">${eventStart} - ${eventEnd}</p>
-                            <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
-                        </div>
-                    </div>
-                    <div id="weather" class="col-md-2">Weather</div>
+            // Setup card with event info
+            newEventCard = `
+            <div class="card mb-3 eventCards">
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <img src="${defaultImages[topic]}" class="card-img">
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-right">
-                            <a href="${eventsurl}" class="btn btn-primary eventBtn">More Info</a>
-                        </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 id= "place" class="card-title">${eventName}</h5>
+                        <p id = "location" class="card-text"><small class="text-muted">${streetAddress}, ${cityState}, ${zipcode}</small></p>
+                        <p id="dates" class="card-text">${eventStart} - ${eventEnd}</p>
+                        <p id="days" class="card-text">${eventDays}</p>
+                        <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
                     </div>
                 </div>
+                <div id="weather" class="col-md-3">Weather</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-right">
+                        <a href="${eventsurl}" class="btn btn-primary eventBtn">More Info</a>
+                    </div>
                 </div>
-                `;
+            </div>
+            </div>
+            `;
 
-                $('#results').append(newEventCard);
-            } else {
-                // No link, most likely duplicate event, do not display
-            }
+            $('#results').append(newEventCard);
+
         }
     });
          

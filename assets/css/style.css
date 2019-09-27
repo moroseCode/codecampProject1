@@ -116,3 +116,7 @@ button{
     position: relative;
     bottom: -70px;
 }
+
+.card-img {
+    object-fit: cover;
+}
