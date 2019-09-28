@@ -50,7 +50,8 @@ var weatherIcons = {
     "mostly cloudy w/ showers" : "http://uds-static.api.aero/weather/icon/sm/40.png",
     "partly cloudy w/ t-storms" : "http://uds-static.api.aero/weather/icon/sm/41.png",
     "mostly cloudy w/ flurries" : "http://uds-static.api.aero/weather/icon/sm/43.png",
-    "mostly cloudy w/ snow" : "http://uds-static.api.aero/weather/icon/sm/44.png"
+    "mostly cloudy w/ snow" : "http://uds-static.api.aero/weather/icon/sm/44.png",
+    "unavailable" : "assets/images/weatherUnavailable.jpg"
 };
 
 var defaultImages = {
@@ -243,23 +244,33 @@ $(function() {
                         eventImage = defaultImages[topic];
                     }
 
-                    console.log(eventImage);
+                    // Determine if weather available
+                    todaysDate = moment();
+                    difference = moment(eventStart).diff(todaysDate, 'days');
+                    // Difference is less than 5, get weather data
+                    if ( difference < 5 ) {
+                        for(w = 0; w < weatherData.length; w++) {
+                            weatherDate = weatherData[w].Date;
+                            weatherDate = moment(weatherDate).format('MMDDYYYY');
+                            if (eventDay == weatherDate) {
+                                var rainProb = weatherData[w].Day.RainProbability;
+                                var minTemp = weatherData[w].Temperature.Minimum.Value;
+                                var maxTemp =  weatherData[w].Temperature.Maximum.Value;
+                                var weatherDescription = weatherData[w].Day.LongPhrase;
+                                var iconPhrase = weatherData[w].Day.IconPhrase.trim().toLowerCase();
 
-                    // Determine weather
-                    for(w = 0; w < weatherData.length; w++) {
-                        weatherDate = weatherData[w].Date;
-                        weatherDate = moment(weatherDate).format('MMDDYYYY');
-                        if (eventDay == weatherDate) {
-                            var rainProb = weatherData[w].Day.RainProbability;
-                            var minTemp = weatherData[w].Temperature.Minimum.Value;
-                            var maxTemp =  weatherData[w].Temperature.Maximum.Value;
-                            var weatherDescription = weatherData[w].Day.LongPhrase;
-                            var iconPhrase = weatherData[w].Day.IconPhrase.trim().toLowerCase();
+                                // Determine what weather icon to use
+                                weatherIcon = weatherIcons[iconPhrase];
+                            }
                         }
+                    } else {
+                        // Greater than 5 days out, no weather data
+                        var rainProb = "n/a";
+                        var minTemp = "n/a";
+                        var maxTemp =  "n/a";
+                        var weatherDescription = "Weather Unavailable - check back at a later date.";
+                        weatherIcon = "";
                     }
-
-                    // Determine what weather icon to use
-                    weatherIcon = weatherIcons[iconPhrase];
         
                     // Unhide results div and jump down to that section
                     $('#results').removeClass("invisible");
