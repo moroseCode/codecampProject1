@@ -125,7 +125,7 @@ button{
     padding-left: 30px;
     padding-right: 30px;
     position:relative;
-    left:150px;
+    left:50px;
 
 }
 
@@ -151,12 +151,21 @@ button{
 
 #results {
     position: relative;
-    bottom: 850px;
+    bottom: 700px;
+}
+
+.h2 {
+    font-size: 50px;
+}
+
+.button-position {
+    position:relative;
+    left:150px;
 }
 
 .eventCards {
     position: relative;
-    bottom: -70px;
+    bottom: -30px;
 }
 
 .card-img {
