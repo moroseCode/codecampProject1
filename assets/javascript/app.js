@@ -120,12 +120,19 @@ $(function() {
       console.log(cityInfo.suggestion);
     });
   })();
+  
+  // on click of the reset button clears search results
+  $("#reset").click(function(){
+    $("#results").empty();
+});
 
   // On click of the submit button
   $("#submit").click(function(){
     sDate = $("#startDate").val();
     eDate = $("#endDate").val();
    
+  
+  
     // Get weather data
     var coordsUrl = "https://dataservice.accuweather.com/locations/v1/cities/search"
     var locLat = latitude //temp value needs to be a variable from the info from the stuff Bishop is using
