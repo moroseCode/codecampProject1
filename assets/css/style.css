@@ -28,17 +28,21 @@ button{
     color:white;
 }
 
-.h3-contact {
-    color: white;
-}
-
 .h3-contact, #contact-us {
     position: relative;
     top:55px;
 }
 
+.h3-contact {
+    color: white;
+    background-image:linear-gradient(transparent, rgb(99,124,164));
+    padding: 5px;
+}
+
 .h3-about {
     color: white;
+    background-image:linear-gradient(transparent, grey);
+    padding: 5px;
 }
 
 .h3-about, #about-us {
@@ -91,7 +95,7 @@ button{
 }
 
 .about-background {
-    background-image:url("../images/adventure-backpacker-climb-1365425.jpg");
+    background-image:url("../images/action-athletes-audience-1884574.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -124,11 +128,12 @@ button{
 }
 
 #about-us {
-    background-image:linear-gradient(rgb(129,131,128), rgb(108,72,58));
+    background-image:linear-gradient(rgb(212,219,226), rgb(136, 70, 93));
     border-width: 1px;
     border-style: solid;
     border-color: rgb(43,25,17);
     border-radius: 10px;
+
 }
 
 .clearfix::after {
