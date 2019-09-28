@@ -10,6 +10,7 @@ var lname;
 var weatherResponse;
 var geoResponse;
 var activityResponse;
+var activity;
 
 var weatherIcons = {
     "sunny" : "http://uds-static.api.aero/weather/icon/sm/01.png",
@@ -55,8 +56,15 @@ var weatherIcons = {
 
 var defaultImages = {
     "default" : "assets/images/defaultOutdoors.jpg",
-    "golf" : "assets/images/defaultGolf.jpg"
+    "golf" : "assets/images/defaultGolf.jpg",
+    "running" : "assets/images/defaultRunning.jpg"
 };
+
+// Dropdown menu select activity
+$(".dropdown-item").click(function(){
+    activity = $(this).text().trim();
+    $('#dropdown-input').val(activity);
+  });
 
 // Listen for input in the Location field
 $(function() {
@@ -134,7 +142,7 @@ $(function() {
      //Active API
      var activeParams = {
          "api_key": "yfb8tzs47k5z8j9463emhphv",
-         "query":    "golf", //temp value, would need to be from form on index. Requires OR if multiple search terms used
+         "query":    activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
          "lat_lon": latitude + "," + longitude, //temp value
          "radius": "25", //temp value
          "start_date": startDate + ".." + endDate,
@@ -161,9 +169,11 @@ $(function() {
             var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
             var zipcode = results[i].place.postalCode;
             var eventsurl = results[i].registrationUrlAdr;
-            var topic = results[i].assetChannels["0"].channel.channelName.toLowerCase().replace(/[^a-z0-9\s]/gi, '');
-            console.log(eventName);
-            console.log(topic);
+            var topic = results[i].assetChannels["0"].channel.channelName.toLowerCase().replace(/[^a-z0-9\s]/gi, '');  // replace special characters, which cause js errors to be thrown
+            var eventImage = results[i].logoUrlAdr;
+
+            eventStart = moment(eventStart).format('MM/DD/YYYY hh:mm a');
+            eventEnd = moment(eventEnd).format('MM/DD/YYYY hh:mm a');
 
             // Check if topic is in the defaultImages object
             if (Object.keys(defaultImages).indexOf(topic) < 1 ) {
@@ -171,7 +181,11 @@ $(function() {
                 topic = "default";
             }
 
-            console.log(defaultImages[topic]);
+            if (eventImage) {
+                // Event has an image, no need to replace
+            } else {
+                eventImage = defaultImages[topic];
+            }
 
             // Unhide results div and jump down to that section
             $('#results').removeClass("invisible");
@@ -182,14 +196,15 @@ $(function() {
             <div class="card mb-3 eventCards">
             <div class="row no-gutters">
                 <div class="col-md-3">
-                    <img src="${defaultImages[topic]}" class="card-img">
+                    <img src="${eventImage}" class="card-img">
                 </div>
                 <div class="col-md-6">
                     <div class="card-body">
                         <h5 id= "place" class="card-title">${eventName}</h5>
-                        <p id = "location" class="card-text"><small class="text-muted">${streetAddress}, ${cityState}, ${zipcode}</small></p>
-                        <p id="dates" class="card-text">${eventStart} - ${eventEnd}</p>
-                        <p id="days" class="card-text">${eventDays}</p>
+                        <p id = "location" class="card-text"><small class="text-muted event-muted"><i class="fas fa-map-marker-alt"></i>&nbsp;${streetAddress}, ${cityState}, ${zipcode}</small></p>
+                        <p id="dates" class="card-text"><small class="text-muted event-muted"><i class="far fa-clock"></i>&nbsp;${eventStart} - ${eventEnd}</small></p>
+                        <p id="days" class="card-text"><small class="text-muted event-muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${eventDays}</small></p>
+                        <hr>
                         <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
                     </div>
                 </div>
@@ -198,7 +213,7 @@ $(function() {
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-right">
-                        <a href="${eventsurl}" class="btn btn-primary eventBtn">More Info</a>
+                        <a href="${eventsurl}" class="btn btn-primary eventBtn" target="_blank">More Info</a>
                     </div>
                 </div>
             </div>
