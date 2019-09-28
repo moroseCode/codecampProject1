@@ -55,25 +55,25 @@ var weatherIcons = {
 };
 
 var defaultImages = {
-    "default" : "assets/images/defaultOutdoors.jpg",
-    "golf" : "assets/images/defaultGolf.jpg",
-    "running" : "assets/images/defaultRunning.jpg"
+    "default": "assets/images/defaultOutdoors.jpg",
+    "golf": "assets/images/defaultGolf.jpg",
+    "running": "assets/images/defaultRunning.jpg"
 };
 
 // Dropdown menu select activity
-$(".dropdown-item").click(function(){
+$(".dropdown-item").click(function () {
     activity = $(this).text().trim();
     $('#dropdown-input').val(activity);
-  });
+});
 
 // Listen for input in the Location field
-$(function() {
-    $('#city-input').on('input',function() {
+$(function () {
+    $('#city-input').on('input', function () {
         inputVal = $(this).val();
         if (inputVal == "Use my current location") {
             // HTML 5 GeoLocation API
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
+                navigator.geolocation.getCurrentPosition(function (position) {
                     // Get latitude and longitude from browser
                     latitude = position.coords.latitude;
                     longitude = position.coords.longitude;
@@ -82,58 +82,64 @@ $(function() {
 
                     // Define GeoNames query URL to reverse geocode 
                     var geoNamesURL = 'https://secure.geonames.org/findNearbyPostalCodesJSON?lat=' + latitude + '&lng=' + longitude + '&username=bflatbader&maxRows=1'
-            
+
                     // AJAX request
                     $.ajax({
-                        url: geoNamesURL,
-                        method: "GET"
-                    })
-                    // After data comes back from the request
-                    .then(function(gnResults) {
-                        latitude = gnResults.postalCodes[0].lat;
-                        longitude = gnResults.postalCodes[0].lng;
-                        city = gnResults.postalCodes[0].placeName;
-                        $('#city-input').val(city);
-                    });
+                            url: geoNamesURL,
+                            method: "GET"
+                        })
+                        // After data comes back from the request
+                        .then(function (gnResults) {
+                            latitude = gnResults.postalCodes[0].lat;
+                            longitude = gnResults.postalCodes[0].lng;
+                            city = gnResults.postalCodes[0].placeName;
+                            $('#city-input').val(city);
+                        });
                 });
             }
         }
     });
 });
 
-(function() {
+(function () {
     // Configure Algolia Places API
     var placesAutocomplete = places({
         appId: 'plFMDJBLKKRN',
         apiKey: '1cb69f9d821db1d22c2375decf532784',
         container: document.querySelector('#city-input'),
         templates: {
-        value: function(suggestion) { return suggestion.name; }
-    }
+            value: function (suggestion) {
+                return suggestion.name;
+            }
+        }
     }).configure({
         countries: ['us'], // Search in the United States of America
         type: 'city' // Search only for cities names
     });
     // Get city data on selection from location autocomplete
     placesAutocomplete.on('change', function resultSelected(cityInfo) {
-      latitude = cityInfo.suggestion.latlng.lat;
-      longitude = cityInfo.suggestion.latlng.lng;
-      console.log(cityInfo.suggestion);
+        latitude = cityInfo.suggestion.latlng.lat;
+        longitude = cityInfo.suggestion.latlng.lng;
+        console.log(cityInfo.suggestion);
     });
-  })();
-  
-  // on click of the reset button clears search results
-  $("#reset").click(function(){
+})();
+
+// on click of the reset button clears search results
+$("#reset").click(function () {
     $("#results").empty();
+    $("#dropdown-input").val("");
+    $("#city-input").val("");
+    $("#startDate").val("");
+    $("#endDate").val("");
 });
 
-  // On click of the submit button
-  $("#submit").click(function(){
+// On click of the submit button
+$("#submit").click(function () {
     sDate = $("#startDate").val();
     eDate = $("#endDate").val();
-   
-  
-  
+
+
+
     // Get weather data
     var coordsUrl = "https://dataservice.accuweather.com/locations/v1/cities/search"
     var locLat = latitude //temp value needs to be a variable from the info from the stuff Bishop is using
@@ -151,7 +157,7 @@ $(function() {
         // Get City ID to get weather information
         cityID = response[0].Key
         console.log(cityID)
-    }).then(function(){
+    }).then(function () {
         var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
         var weatherParams = {
             "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
@@ -165,39 +171,39 @@ $(function() {
         }).then(function (response) {
             weatherData = response.DailyForecasts;
 
-        }).then(function(){
+        }).then(function () {
             // Active.com API
             // proxy required to get the active.com api to work properly
-            jQuery.ajaxPrefilter(function(options) {
+            jQuery.ajaxPrefilter(function (options) {
                 if (options.crossDomain && jQuery.support.cors) {
                     options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
                 }
-                });
-                //start and end dates from the form on index.html -- must be in YYYY-MM-DD format
-                var startDate = sDate; //temp date for testing, add proper date from index.html
-                var endDate = eDate; //temp date for testing, add proper date from index.html
-                
-                //Active API
-                var activeParams = {
-                    "api_key": "yfb8tzs47k5z8j9463emhphv",
-                    "query":    activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
-                    "lat_lon": latitude + "," + longitude, //temp value
-                    "radius": "25", //temp value
-                    "start_date": startDate + ".." + endDate,
-                    "exclude_children": "true"
-                }
-                
-                var queryURL = "http://api.amp.active.com/v2/search";
-                
-                $.ajax({
-                    url: queryURL,
-                    method: "GET",
-                    data: activeParams
-                    }).then(function(response) {
-                    var results = response.results;
-                    console.log(results);
-                
-                for(i = 0; i < results.length; i++){
+            });
+            //start and end dates from the form on index.html -- must be in YYYY-MM-DD format
+            var startDate = sDate; //temp date for testing, add proper date from index.html
+            var endDate = eDate; //temp date for testing, add proper date from index.html
+
+            //Active API
+            var activeParams = {
+                "api_key": "yfb8tzs47k5z8j9463emhphv",
+                "query": activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
+                "lat_lon": latitude + "," + longitude, //temp value
+                "radius": "25", //temp value
+                "start_date": startDate + ".." + endDate,
+                "exclude_children": "true"
+            }
+
+            var queryURL = "http://api.amp.active.com/v2/search";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+                data: activeParams
+            }).then(function (response) {
+                var results = response.results;
+                console.log(results);
+
+                for (i = 0; i < results.length; i++) {
                     var eventName = results[i].assetName;
                     var description = results[i].assetDescriptions["0"].description;
                     var eventStart = results[i].activityStartDate;
@@ -207,7 +213,7 @@ $(function() {
                     var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
                     var zipcode = results[i].place.postalCode;
                     var eventsurl = results[i].registrationUrlAdr;
-                    var topic = results[i].assetChannels["0"].channel.channelName.trim().toLowerCase().replace(/[^a-z0-9\s]/gi, '');  // replace special characters, which cause js errors to be thrown
+                    var topic = results[i].assetChannels["0"].channel.channelName.trim().toLowerCase().replace(/[^a-z0-9\s]/gi, ''); // replace special characters, which cause js errors to be thrown
                     var eventImage = results[i].logoUrlAdr;
 
                     // Format address for driving directions
@@ -221,24 +227,24 @@ $(function() {
 
                     // Format event day for comparison to weather date
                     eventDay = moment(eventStart).format('MMDDYYYY');
-        
+
                     // Check if topic is in the defaultImages object
-                    if (Object.keys(defaultImages).indexOf(topic) < 1 ) {
+                    if (Object.keys(defaultImages).indexOf(topic) < 1) {
                         // If not, set image to default
                         topic = "default";
                     }
-        
+
                     // Determine what image to be used with event
                     if (eventImage) {
                         // Event has an image, check if it exists on Active.com
                         $.get(eventImage)
-                        .done(function() { 
-                            // Image exists, don't need to do anything
-                        }).fail(function() { 
-                            // Image doesn't exist, replace with default
-                            console.log("Image doesn't exist");
-                            eventImage = defaultImages["default"];
-                        })
+                            .done(function () {
+                                // Image exists, don't need to do anything
+                            }).fail(function () {
+                                // Image doesn't exist, replace with default
+                                console.log("Image doesn't exist");
+                                eventImage = defaultImages["default"];
+                            })
 
                     } else {
                         eventImage = defaultImages[topic];
@@ -271,11 +277,11 @@ $(function() {
                         var weatherDescription = "Weather Unavailable - check back at a later date.";
                         weatherIcon = "";
                     }
-        
+               
                     // Unhide results div and jump down to that section
                     $('#results').removeClass("invisible");
-                    $(document).scrollTop( $("#results").offset().top); 
-        
+                    $(document).scrollTop($("#results").offset().top);
+
                     // Setup card with event info
                     newEventCard = `
                     <div class="card mb-3 eventCards">
@@ -306,11 +312,10 @@ $(function() {
                     </div>
                     </div>
                     `;
-        
-                    $('#results').append(newEventCard);        
+
+                    $('#results').append(newEventCard);
                 }
-            });        
+            });
         });
-    }); 
-  });
-  
+    });
+});

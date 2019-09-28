@@ -34,12 +34,14 @@ button{
 }
 
 .h3-contact {
+    font-size: 40px;
     color: white;
     background-image:linear-gradient(transparent, rgb(99,124,164));
     padding: 5px;
 }
 
 .h3-about {
+    font-size:40px;
     color: white;
     background-image:linear-gradient(transparent, grey);
     padding: 5px;
@@ -65,7 +67,8 @@ button{
 
 .jumbotron {
     width: 500px;
-    margin: 10%;
+    margin-top: 10%;
+    margin-left: 10%;
     background-image: linear-gradient(skyblue, rgb(69, 114, 91));
 }
 .position-css {
@@ -82,6 +85,7 @@ button{
 }
 
 #about-us {
+    font-weight:500;
     width: 500px;
     padding:20px;
     margin-top: 10px;
@@ -102,7 +106,7 @@ button{
 }
 
 .parallax-slider {
-    width: 100%;
+    width: 900px;
     height: 100%;
     
 }
@@ -117,9 +121,12 @@ button{
     border: transparent;
 }
 
-#submit {
+#submit, #reset {
+    padding-left: 30px;
+    padding-right: 30px;
     position:relative;
-    right: 15px;
+    left:150px;
+
 }
 
 #send {
@@ -127,12 +134,12 @@ button{
     left: 15px;
 }
 
+
+
 #about-us {
-    background-image:linear-gradient(rgb(212,219,226), rgb(136, 70, 93));
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(43,25,17);
+    background-color:rgb(212,219,226, 0.7);
     border-radius: 10px;
+    font-size:25px;
 
 }
 
