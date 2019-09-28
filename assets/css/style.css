@@ -28,11 +28,20 @@ button{
     color:white;
 }
 
-.h3 {
+.h3-contact {
     color: white;
 }
 
-.h3, #contact-us {
+.h3-contact, #contact-us {
+    position: relative;
+    top:55px;
+}
+
+.h3-about {
+    color: white;
+}
+
+.h3-about, #about-us {
     position: relative;
     top:55px;
 }
@@ -68,8 +77,21 @@ button{
     border-radius: 25px;
 }
 
+#about-us {
+    width: 500px;
+    padding:20px;
+    margin-top: 10px;
+}
+
 .contact-background {
     background-image:url("../images/activity-background-bicycle-2270328.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.about-background {
+    background-image:url("../images/adventure-backpacker-climb-1365425.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -99,6 +121,14 @@ button{
 #send {
     position:relative;
     left: 15px;
+}
+
+#about-us {
+    background-image:linear-gradient(rgb(129,131,128), rgb(108,72,58));
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(43,25,17);
+    border-radius: 10px;
 }
 
 .clearfix::after {
