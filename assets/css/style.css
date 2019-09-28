@@ -4,7 +4,9 @@ html{
 
 body {
     background-color: rgb(206,228,239);
-    height:100%;
+    /* Hide scrollbar */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #brand {
@@ -108,4 +110,9 @@ button{
 #results {
     position: relative;
     bottom: 850px;
+}
+
+.eventCards {
+    position: relative;
+    bottom: -70px;
 }
