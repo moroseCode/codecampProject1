@@ -65,7 +65,8 @@ button{
 
 .jumbotron {
     width: 500px;
-    margin: 10%;
+    margin-top: 10%;
+    margin-left: 10%;
     background-image: linear-gradient(skyblue, rgb(69, 114, 91));
 }
 .position-css {
@@ -102,7 +103,7 @@ button{
 }
 
 .parallax-slider {
-    width: 100%;
+    width: 900px;
     height: 100%;
     
 }
@@ -117,15 +118,20 @@ button{
     border: transparent;
 }
 
-#submit {
+#submit, #reset {
+    padding-left: 30px;
+    padding-right: 30px;
     position:relative;
-    right: 15px;
+    left:150px;
+
 }
 
 #send {
     position:relative;
     left: 15px;
 }
+
+
 
 #about-us {
     background-image:linear-gradient(rgb(212,219,226), rgb(136, 70, 93));
