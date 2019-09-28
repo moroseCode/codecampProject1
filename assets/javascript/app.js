@@ -208,6 +208,11 @@ $(function() {
                     var eventsurl = results[i].registrationUrlAdr;
                     var topic = results[i].assetChannels["0"].channel.channelName.trim().toLowerCase().replace(/[^a-z0-9\s]/gi, '');  // replace special characters, which cause js errors to be thrown
                     var eventImage = results[i].logoUrlAdr;
+
+                    // Format address for driving directions
+                    var fullAddress = streetAddress + "," + cityState + "," + zipcode;
+                    fullAddress = encodeURIComponent(fullAddress);
+                    var mapsURL = " https://www.google.com/maps/place/" + fullAddress;
                     
                     // Format event start and end for display later
                     eventStart = moment(eventStart).format('MM/DD/YYYY hh:mm a');
@@ -277,6 +282,7 @@ $(function() {
                                 <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
                                 <br>
                                 <a href="${eventsurl}" class="btn btn-primary eventBtn" target="_blank">More Info</a>
+                                <a href="${mapsURL}" class="btn btn-primary eventBtn" target="_blank"><i class="far fa-map"></i>&nbsp;Get Directions</a>
                             </div>
                         </div>
                         <div id="weather" class="col-md-3 text-center">
