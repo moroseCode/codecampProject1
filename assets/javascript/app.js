@@ -7,9 +7,9 @@ var inputVal;
 var sDate;
 var eDate;
 var lname;
-var weatherResponse;
-var geoResponse;
-var activityResponse;
+var weatherData;
+var activity;
+var cityID;
 
 var weatherIcons = {
     "sunny" : "http://uds-static.api.aero/weather/icon/sm/01.png",
@@ -54,8 +54,16 @@ var weatherIcons = {
 };
 
 var defaultImages = {
-    "golf" : "assets/images/defaultGolf.jpg"
+    "default" : "assets/images/defaultOutdoors.jpg",
+    "golf" : "assets/images/defaultGolf.jpg",
+    "running" : "assets/images/defaultRunning.jpg"
 };
+
+// Dropdown menu select activity
+$(".dropdown-item").click(function(){
+    activity = $(this).text().trim();
+    $('#dropdown-input').val(activity);
+  });
 
 // Listen for input in the Location field
 $(function() {
@@ -118,131 +126,167 @@ $(function() {
     sDate = $("#startDate").val();
     eDate = $("#endDate").val();
    
-     // setting global variable for the city ID used in the location
-     var cityID = "";
-     // proxy required to get the active.com api to work properly
-     jQuery.ajaxPrefilter(function(options) {
-     if (options.crossDomain && jQuery.support.cors) {
-         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-     }
-     });
-     //start and end dates from the form on index.html -- must be in YYYY-MM-DD format
-     var startDate = sDate; //temp date for testing, add proper date from index.html
-     var endDate = eDate; //temp date for testing, add proper date from index.html
-     
-     //Active API
-     var activeParams = {
-         "api_key": "yfb8tzs47k5z8j9463emhphv",
-         "query":    "golf", //temp value, would need to be from form on index. Requires OR if multiple search terms used
-         "lat_lon": latitude + "," + longitude, //temp value
-         "radius": "25", //temp value
-         "start_date": startDate + ".." + endDate
-     }
-     
-     var queryURL = "http://api.amp.active.com/v2/search";
-     
+    // Get weather data
+    var coordsUrl = "https://dataservice.accuweather.com/locations/v1/cities/search"
+    var locLat = latitude //temp value needs to be a variable from the info from the stuff Bishop is using
+    var locLon = longitude //same as above
+    var coordsParams = {
+        "apikey": "0AJTGemJpazvUYpRY1sAuD3oMlYV26EA",
+        "q": locLat + "," + locLon
+    }
+
     $.ajax({
-         url: queryURL,
-         method: "GET",
-         data: activeParams
-         }).then(function(response) {
-         var results = response.results;
-         console.log(results);
-        
-        for(i = 0; i < results.length; i++){
-            var eventName = results[i].assetName;
-            var description = results[i].assetDescriptions["0"].description;
-            var eventStart = results[i].activityStartDate;
-            var eventEnd = results[i].activityEndDate;
-            var streetAddress = results[i].place.addressLine1Txt;
-            var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
-            var zipcode = results[i].place.postalCode;
-            var eventsurl = results[i].registrationUrlAdr;
-            var topic = results[i].assetTopics["0"].topic.topicName.toLowerCase();
-
-            $('#results').removeClass("invisible");
-            $(document).scrollTop( $("#results").offset().top); 
-
-            if (eventsurl) {
-                newEventCard = `
-                <div class="card mb-3 eventCards">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="${defaultImages[topic]}" class="card-img">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 id= "place" class="card-title">${eventName}</h5>
-                            <p id = "location" class="card-text"><small class="text-muted">${streetAddress}, ${cityState}, ${zipcode}</small></p>
-                            <p id="dates" class="card-text">${eventStart} - ${eventEnd}</p>
-                            <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
-                        </div>
-                    </div>
-                    <div id="weather" class="col-md-2">Weather</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-right">
-                            <a href="${eventsurl}" class="btn btn-primary eventBtn">More Info</a>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                `;
-
-                $('#results').append(newEventCard);
-            } else {
-                // No link, most likely duplicate event, do not display
-            }
+        "url": coordsUrl,
+        "method": "GET",
+        "data": coordsParams
+    }).then(function (response) {
+        // Get City ID to get weather information
+        cityID = response[0].Key
+        console.log(cityID)
+    }).then(function(){
+        var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
+        var weatherParams = {
+            "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
+            "details": "true"
         }
-    });
-         
-    //  var coordsUrl = "https://dataservice.accuweather.com/locations/v1/cities/search"
-    //  var locLat = latitude //temp value needs to be a variable from the info from the stuff Bishop is using
-    //  var locLon = longitude //same as above
-    //  var coordsParams = {
-    //      "apikey": "0AJTGemJpazvUYpRY1sAuD3oMlYV26EA",
-    //      "q": locLat + "," + locLon
-    //  }
- 
-    //  $.ajax({
-    //      "url": coordsUrl,
-    //      "method": "GET",
-    //      "data": coordsParams
-    //  }).then(function (response) {
-    //      console.log(response[0].Key)
-    //      cityID = response[0].Key
-         
-    //      console.log(cityID)
-    //  }).then(function(){
-    //      var weatherUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + cityID
-    //      var weatherParams = {
-    //          "apikey": "alDalbGMtcCLkMBINAb9QZKLDnGdExK6",
-    //          "details": "true"
-    //      }
- 
-    //      $.ajax({
-    //          "url": weatherUrl,
-    //          "method": "GET",
-    //          "data": weatherParams
-    //      }).then(function (response) {
-    //          console.log(response.DailyForecasts)
-    //          for(var i = 0; i < (response.DailyForecasts).length; i++){
-    //              var weathDay = response.DailyForecasts[i]
-    //              // pretty sure we are going to need to use the unicode for the percent sign to have it render properly on the actual page
-    //              console.log("Rain Probability: " + weathDay.Day.RainProbability + "%");
-    //              console.log("Low: " + weathDay.Temperature.Minimum.Value)
-    //              console.log("High: " + weathDay.Temperature.Maximum.Value)
-    //              // the phrase to include with the icon and temperatures
-    //              console.log(weathDay.Day.LongPhrase)
-    //              // phrase to use to select the proper icon for weather
-    //              console.log(weathDay.Day.IconPhrase)
-    //              console.log("--------------------------")
-    //          }
-    //      });
-    //  });
+        // Get 5-day forecast
+        $.ajax({
+            "url": weatherUrl,
+            "method": "GET",
+            "data": weatherParams
+        }).then(function (response) {
+            weatherData = response.DailyForecasts;
 
-    
-    
-  })
+        }).then(function(){
+            // Active.com API
+            // proxy required to get the active.com api to work properly
+            jQuery.ajaxPrefilter(function(options) {
+                if (options.crossDomain && jQuery.support.cors) {
+                    options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+                }
+                });
+                //start and end dates from the form on index.html -- must be in YYYY-MM-DD format
+                var startDate = sDate; //temp date for testing, add proper date from index.html
+                var endDate = eDate; //temp date for testing, add proper date from index.html
+                
+                //Active API
+                var activeParams = {
+                    "api_key": "yfb8tzs47k5z8j9463emhphv",
+                    "query":    activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
+                    "lat_lon": latitude + "," + longitude, //temp value
+                    "radius": "25", //temp value
+                    "start_date": startDate + ".." + endDate,
+                    "exclude_children": "true"
+                }
+                
+                var queryURL = "http://api.amp.active.com/v2/search";
+                
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+                    data: activeParams
+                    }).then(function(response) {
+                    var results = response.results;
+                    console.log(results);
+                
+                for(i = 0; i < results.length; i++){
+                    var eventName = results[i].assetName;
+                    var description = results[i].assetDescriptions["0"].description;
+                    var eventStart = results[i].activityStartDate;
+                    var eventEnd = results[i].activityEndDate;
+                    var eventDays = results[i].activityRecurrences["0"].days;
+                    var streetAddress = results[i].place.addressLine1Txt;
+                    var cityState = results[i].place.cityName + ", " + results[i].place.stateProvinceCode;
+                    var zipcode = results[i].place.postalCode;
+                    var eventsurl = results[i].registrationUrlAdr;
+                    var topic = results[i].assetChannels["0"].channel.channelName.trim().toLowerCase().replace(/[^a-z0-9\s]/gi, '');  // replace special characters, which cause js errors to be thrown
+                    var eventImage = results[i].logoUrlAdr;
+                    
+                    // Format event start and end for display later
+                    eventStart = moment(eventStart).format('MM/DD/YYYY hh:mm a');
+                    eventEnd = moment(eventEnd).format('MM/DD/YYYY hh:mm a');
+
+                    // Format event day for comparison to weather date
+                    eventDay = moment(eventStart).format('MMDDYYYY');
+        
+                    // Check if topic is in the defaultImages object
+                    if (Object.keys(defaultImages).indexOf(topic) < 1 ) {
+                        // If not, set image to default
+                        topic = "default";
+                    }
+        
+                    // Determine what image to be used with event
+                    if (eventImage) {
+                        // Event has an image, check if it exists on Active.com
+                        $.get(eventImage)
+                        .done(function() { 
+                            // Image exists, don't need to do anything
+                        }).fail(function() { 
+                            // Image doesn't exist, replace with default
+                            console.log("Image doesn't exist");
+                            eventImage = defaultImages["default"];
+                        })
+
+                    } else {
+                        eventImage = defaultImages[topic];
+                    }
+
+                    console.log(eventImage);
+
+                    // Determine weather
+                    for(w = 0; w < weatherData.length; w++) {
+                        weatherDate = weatherData[w].Date;
+                        weatherDate = moment(weatherDate).format('MMDDYYYY');
+                        if (eventDay == weatherDate) {
+                            var rainProb = weatherData[w].Day.RainProbability;
+                            var minTemp = weatherData[w].Temperature.Minimum.Value;
+                            var maxTemp =  weatherData[w].Temperature.Maximum.Value;
+                            var weatherDescription = weatherData[w].Day.LongPhrase;
+                            var iconPhrase = weatherData[w].Day.IconPhrase.trim().toLowerCase();
+                        }
+                    }
+
+                    // Determine what weather icon to use
+                    weatherIcon = weatherIcons[iconPhrase];
+        
+                    // Unhide results div and jump down to that section
+                    $('#results').removeClass("invisible");
+                    $(document).scrollTop( $("#results").offset().top); 
+        
+                    // Setup card with event info
+                    newEventCard = `
+                    <div class="card mb-3 eventCards">
+                    <div class="row no-gutters">
+                        <div class="col-md-3">
+                            <img src="${eventImage}" class="card-img">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 id= "place" class="card-title">${eventName}</h5>
+                                <p id = "location" class="card-text"><small class="text-muted event-muted"><i class="fas fa-map-marker-alt"></i>&nbsp;${streetAddress}, ${cityState}, ${zipcode}</small></p>
+                                <p id="dates" class="card-text"><small class="text-muted event-muted"><i class="far fa-clock"></i>&nbsp;${eventStart} - ${eventEnd}</small></p>
+                                <p id="days" class="card-text"><small class="text-muted event-muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${eventDays}</small></p>
+                                <hr>
+                                <p id="activity"class="card-text"><small class="text-muted">${description}</small></p>
+                                <br>
+                                <a href="${eventsurl}" class="btn btn-primary eventBtn" target="_blank">More Info</a>
+                            </div>
+                        </div>
+                        <div id="weather" class="col-md-3 text-center">
+                            <img src="${weatherIcon}">
+                            <p><small class="text-muted event-muted">${weatherDescription}</small></p>
+                            <p><i class="fas fa-tint"></i>&nbsp;${rainProb}%</p>
+                            <p><i class="fas fa-temperature-low"></i>&nbsp;${minTemp}&deg;</p>
+                            <p><i class="fas fa-temperature-high"></i>&nbsp;${maxTemp}&deg;</p>
+                        </div>
+                    </div>
+                    </div>
+                    `;
+        
+                    $('#results').append(newEventCard);        
+                }
+            });        
+        });
+    }); 
+  });
   
