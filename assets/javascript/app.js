@@ -1,4 +1,10 @@
 // FUNCTIONS
+// Function to fix unclosed HTML tags in data returned from Active.com API
+function fixHtml(html){
+    var div = document.createElement('div');
+    div.innerHTML=html
+    return (div.innerHTML);
+  }
 
 // VARIABLES
 var latitude;
@@ -56,8 +62,13 @@ var weatherIcons = {
 
 var defaultImages = {
     "default": "assets/images/defaultOutdoors.jpg",
+    "cycling": "assets/images/defaultCycling.jpg",
+    "fitness and wellbeinghealth" : "assets/images/defaultFitness.jpg",
     "golf": "assets/images/defaultGolf.jpg",
-    "running": "assets/images/defaultRunning.jpg"
+    "recreationarts and crafts": "assets/images/defaultArt.jpg",
+    "running": "assets/images/defaultRunning.jpg",
+    "soccer": "assets/images/defaultSoccer.jpg",
+    "tennis": "assets/images/defaultTennis.jpg"
 };
 
 // Dropdown menu select activity
@@ -183,14 +194,24 @@ $("#submit").click(function () {
             var startDate = sDate; //temp date for testing, add proper date from index.html
             var endDate = eDate; //temp date for testing, add proper date from index.html
 
-            //Active API
-            var activeParams = {
-                "api_key": "yfb8tzs47k5z8j9463emhphv",
-                "query": activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
-                "lat_lon": latitude + "," + longitude, //temp value
-                "radius": "25", //temp value
-                "start_date": startDate + ".." + endDate,
-                "exclude_children": "true"
+            if (activity == "all") {
+                var activeParams = {
+                    "api_key": "yfb8tzs47k5z8j9463emhphv",
+                    "lat_lon": latitude + "," + longitude, //temp value
+                    "radius": "25", //temp value
+                    "start_date": startDate + ".." + endDate,
+                    "exclude_children": "true"
+                }
+            } else {
+                //Active API
+                var activeParams = {
+                    "api_key": "yfb8tzs47k5z8j9463emhphv",
+                    "query": activity, //temp value, would need to be from form on index. Requires OR if multiple search terms used
+                    "lat_lon": latitude + "," + longitude, //temp value
+                    "radius": "25", //temp value
+                    "start_date": startDate + ".." + endDate,
+                    "exclude_children": "true"
+                }
             }
 
             var queryURL = "http://api.amp.active.com/v2/search";
@@ -215,6 +236,11 @@ $("#submit").click(function () {
                     var eventsurl = results[i].registrationUrlAdr;
                     var topic = results[i].assetChannels["0"].channel.channelName.trim().toLowerCase().replace(/[^a-z0-9\s]/gi, ''); // replace special characters, which cause js errors to be thrown
                     var eventImage = results[i].logoUrlAdr;
+
+                    console.log("Topic: " + topic);
+
+                    // Call FixHtml function to fix unclosed HTML tags in description
+                    description = fixHtml(description);
 
                     // Format address for driving directions
                     var fullAddress = streetAddress + "," + cityState + "," + zipcode;
@@ -303,7 +329,7 @@ $("#submit").click(function () {
                             </div>
                         </div>
                         <div id="weather" class="col-md-3 text-center">
-                            <img src="${weatherIcon}">
+                            <img class="weatherImg" src="${weatherIcon}">
                             <p><small class="text-muted event-muted">${weatherDescription}</small></p>
                             <p><i class="fas fa-tint"></i>&nbsp;${rainProb}%</p>
                             <p><i class="fas fa-temperature-low"></i>&nbsp;${minTemp}&deg;</p>
