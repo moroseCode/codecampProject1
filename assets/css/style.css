@@ -175,3 +175,7 @@ button{
 .event-muted {
     padding-bottom: 5px;
 }
+
+.weather-image {
+    padding-top: 10px;
+}
